@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Helpers;
 using WebApi.Services;
+using static WebApplication1.Data.Connection;
+using WebApplication1.Services;
+using WebApplication1.Data;
 
 namespace WebApplication1
 {
@@ -25,6 +29,14 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<Context>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            var connection_ = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContextPool<Connection>(options => options.UseSqlServer(connection_));
+
+
             services.AddCors();
             services.AddControllers();
 
@@ -32,6 +44,10 @@ namespace WebApplication1
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // configure DI for application services
+
+            TestConnection test = new TestConnection();
+
+            var textTest = test.GetOrders();
             services.AddScoped<IUserService, UserService>();
             services.AddControllersWithViews();
         }
