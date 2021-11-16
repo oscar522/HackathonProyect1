@@ -33,8 +33,8 @@ namespace WebApplication1
             //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            var connection_ = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContextPool<Connection>(options => options.UseSqlServer(connection_));
+            //var connection_ = Configuration.GetConnectionString("DefaultConnection");
+            //services.AddDbContextPool<Connection>(options => options.UseSqlServer(connection_));
 
 
             services.AddCors();

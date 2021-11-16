@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using WebApi.Models;
@@ -12,13 +13,14 @@ namespace WebApi.Controllers
     public class RoutesController : ControllerBase
     {
         private IUserService _userService;
-        private readonly Connection _context;
+        //private readonly Connection _context;
+        private readonly IConfiguration _configuration;
+        public IConfiguration Configuration { get; }
 
-        public RoutesController(IUserService userService, Connection context)
+        public RoutesController(IUserService userService, IConfiguration iConfig)
         {
             _userService = userService;
-            _context = context;
-
+            _configuration = iConfig;
         }
 
         [HttpPost("authenticate")]
@@ -34,11 +36,15 @@ namespace WebApi.Controllers
 
         
         [HttpGet]
-        public IActionResult CreateRoutes(string DateRoutes )
+        public IActionResult CreateRoutes(string DateRoutes)
         {
-            try {
-                    RoutesService RoutesService_ = new RoutesService();
-                    var StatusResult = RoutesService_.RoutesCreate(_context, Convert.ToDateTime( DateRoutes));
+            var connection_ = _configuration.GetConnectionString("DefaultConnection");
+
+            Connection contex = new Connection(connection_);
+            try
+            {
+                RoutesService RoutesService_ = new RoutesService();
+                var StatusResult = RoutesService_.RoutesCreate(contex, Convert.ToDateTime( DateRoutes));
                 return Ok(StatusResult);
 
             } catch(Exception e ) {
