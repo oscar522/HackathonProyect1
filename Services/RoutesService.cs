@@ -48,7 +48,13 @@ namespace WebApi.Services
 
                 ////////////// PUNTO 2
                 ///
-                List<Orders> list2 = WebApplication1.Services.DefineRoute.Define(list);               
+                List<Orders> list2 = WebApplication1.Services.DefineRoute.Define(list);
+                context.SaveChanges();
+
+                ////////////// PUNTO 3
+                ///
+
+
             }
             catch (Exception e ) {
                 Result = e.Message;
