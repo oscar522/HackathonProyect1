@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpGet]
         public IActionResult CreateRoutes(string DateRoutes )
         {

@@ -22,12 +22,14 @@ namespace WebApplication1.Services
             //Define la cantidad de ordenes que se puede enviar, la diferencia hay que descartar
             GroupOrders groups = DefineRoute.Verify(orderQty);
 
-        /*
             while (groups.Total() < orders.Count(x=>x.delivery_date.HasValue ))
             {
                 orders.Where(x => (x.delivery_end_date > x.delivery_date)).OrderBy(x => x.longitude).FirstOrDefault().delivery_date = null;
             }
-        */
+
+            //Crea las rutas de 98 ordenes
+            //orders.OrderBy 
+        
             return orders;
         }
 

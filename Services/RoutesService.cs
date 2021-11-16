@@ -26,6 +26,7 @@ namespace WebApi.Services
         }
         public List<Orders> RoutesCreate(Connection context, DateTime RouteDate)
         {
+           // RouteDate = new DateTime(2021, 09, 02);
             List<Orders> list = new List<Orders>();
 
             string Result = "";
@@ -44,11 +45,10 @@ namespace WebApi.Services
                 };
 
                 list = context.Orders.FromSqlRaw<Orders>(sql, parms.ToArray()).ToList();
-                
+
                 ////////////// PUNTO 2
                 ///
-                
-               
+                List<Orders> list2 = WebApplication1.Services.DefineRoute.Define(list);               
             }
             catch (Exception e ) {
                 Result = e.Message;
