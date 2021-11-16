@@ -14,11 +14,13 @@ namespace WebApplication1.Data
         {
         }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<Resultado> Resultado { get; set; }
 
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 modelBuilder.Entity<Orders>().ToTable("Orders");
+                modelBuilder.Entity<Resultado>().ToTable("Resultado");
             }
         }
     }
