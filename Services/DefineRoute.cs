@@ -11,7 +11,7 @@ namespace WebApplication1.Services
         public static List<Orders> Define(List<Orders> orders)
         {
             double minX, maxX, minY, maxY;
-            int orderQty, orderMax;
+            int orderQty;
 
             minX = orders.Min(x => x.latitude);
             minY = orders.Min(x => x.longitude);
