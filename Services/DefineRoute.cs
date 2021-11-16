@@ -28,9 +28,27 @@ namespace WebApplication1.Services
             }
 
             //Crea las rutas de 98 ordenes
-            //orders.OrderBy 
-        
+            int track_number = 1;
+            CreateTrack(ref orders, ref track_number, 98, groups.group98);
+            CreateTrack(ref orders, ref track_number, 99, groups.group99);
+            CreateTrack(ref orders, ref track_number, 100, groups.group100);
+
             return orders;
+        }
+
+        private static void CreateTrack(ref List<Orders> orders, ref int track_number, int group, int qty)
+        {
+            int i;
+            for (i = 0; i < qty; i++)
+            {
+                List<Orders> lst = orders.Where(x => !x.track_number.HasValue).OrderBy(x => x.longitude).Take(group).ToList();
+                foreach (Orders item in lst)
+                {
+                    item.track_number = track_number;
+                }
+                track_number++;
+            }
+
         }
 
         /// <summary>
@@ -38,7 +56,7 @@ namespace WebApplication1.Services
         /// </summary>
         /// <param name="orderQty">Cantidad de ordenes iniciales</param>
         /// <returns> Retorna una clase en donde informa cuántas rutas hay que crear de 98, de 99 y de 100</returns>
-        public static GroupOrders Verify(int orderQty)
+        private static GroupOrders Verify(int orderQty)
         {
             GroupOrders groups = new GroupOrders();
 
