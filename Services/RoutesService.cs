@@ -48,7 +48,7 @@ namespace WebApi.Services
 
                 ////////////// PUNTO 2
                 ///
-                List<Orders> list2 = WebApplication1.Services.DefineRoute.Define(list);
+                list = WebApplication1.Services.DefineRoute.Define(list);
                 context.SaveChanges();
 
                 ////////////// PUNTO 3
