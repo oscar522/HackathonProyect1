@@ -23,5 +23,7 @@ namespace WebApplication1.Models
         public DateTime? delivery_date { get; set;}
         public int? track_number { get; set; }
         public int? track_order { get; set; }
-	}
+        public double? distance { get; set; }
+
+    }
 }

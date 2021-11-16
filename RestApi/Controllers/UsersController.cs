@@ -12,12 +12,12 @@ namespace WebApi.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
-        private readonly Connection _context;
+     
 
-        public UsersController(IUserService userService, Connection context)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
-            _context = context;
+           
 
         }
 
@@ -32,13 +32,13 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpGet]
         public IActionResult GetAll()
         {
             try {
-
-                var xxxx = _context.Orders.Where(x => x.id == 2637).ToList();
+                Connection context = new Connection();
+                var xxxx = context.Orders.Where(x => x.id == 2637).ToList();
                 var cc = "";
             } catch(Exception e ) {
                 var error = e; 
