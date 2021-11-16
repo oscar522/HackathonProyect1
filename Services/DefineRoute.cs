@@ -58,10 +58,11 @@ namespace WebApplication1.Services
         /// <returns> Retorna una clase en donde informa cuántas rutas hay que crear de 98, de 99 y de 100</returns>
         private static GroupOrders Verify(int orderQty)
         {
+            
             GroupOrders groups = new GroupOrders();
 
             if (orderQty < 98) return groups;
-            if (orderQty % 100 == 0)
+            /*if (orderQty % 100 == 0)
             {
                 groups.group100 = (orderQty / 100);
                 return groups;
@@ -92,6 +93,10 @@ namespace WebApplication1.Services
 
             if (o1.Total() < o2.Total()) o1 = o2;
             if (o1.Total() < o3.Total()) o1 = o3;
+            */
+
+            GroupOrders o1 = Verify(orderQty % 98);
+            o1.group98 = orderQty / 98;
 
             while ((o1.Total() < orderQty) && (o1.group98 > 0))
             {
