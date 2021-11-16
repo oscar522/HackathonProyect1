@@ -92,6 +92,19 @@ namespace WebApplication1.Services
 
             if (o1.Total() < o2.Total()) o1 = o2;
             if (o1.Total() < o3.Total()) o1 = o3;
+
+            while ((o1.Total() < orderQty) && (o1.group98 > 0))
+            {
+                o1.group99++;
+                o1.group98--;
+            }
+
+            while ((o1.Total() < orderQty) && (o1.group99 > 0))
+            {
+                o1.group100++;
+                o1.group99--;
+            }
+
             return o1;
 
         }
