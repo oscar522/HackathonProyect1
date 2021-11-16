@@ -31,6 +31,7 @@ namespace WebApplication1.Services
                 ordenarGen = new Orders[lst.Count()];
                 ordenarGen = lst.ToArray();
                 ordenarGen[0].track_order = 1;
+                ordenarGen[0].distance = 0;
                 //Console.WriteLine(ordenarGen[0].id + " : " + ordenarGen[0].track_order);
                 Ordenamiento(ordenarGen, 0);
                 listFinal.AddRange(ordenarGen.ToList());
@@ -52,7 +53,7 @@ namespace WebApplication1.Services
                     if (i != j)
                     {
                         validacion = true;
-                        calNuevo = CalcularDistancia(ordenar[i].latitude, ordenar[j].latitude, ordenar[i].longitude, ordenar[j].longitude) / 10000;
+                        calNuevo = CalcularDistancia(ordenar[i].latitude, ordenar[j].latitude, ordenar[i].longitude, ordenar[j].longitude) / 1000;
                         if (calNuevo < calAntiguo)
                         {
                             calAntiguo = calNuevo;
@@ -65,6 +66,7 @@ namespace WebApplication1.Services
             {
                 cont = cont + 1;
                 ordenarGen[campo].track_order = cont;
+                ordenarGen[campo].distance = calAntiguo;
                 //Console.WriteLine(ordenarGen[campo].id + " : " + ordenarGen[campo].track_order + " : " + calAntiguo);
                 Ordenamiento(ordenarGen, campo);
             }
