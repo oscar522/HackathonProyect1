@@ -41,7 +41,7 @@ namespace WebApplication1.Services
             int i;
             for (i = 0; i < qty; i++)
             {
-                List<Orders> lst = orders.Where(x => !x.track_number.HasValue).OrderBy(x => x.longitude).Take(group).ToList();
+                List<Orders> lst = orders.Where(x => (!x.track_number.HasValue) && (x.delivery_date.HasValue)).OrderBy(x => x.longitude).Take(group).ToList();
                 foreach (Orders item in lst)
                 {
                     item.track_number = track_number;
