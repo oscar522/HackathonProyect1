@@ -13,7 +13,7 @@ using WebApi.Helpers;
 using WebApi.Models;
 using WebApplication1.Data;
 using WebApplication1.Models;
-
+using WebApplication1.Services;
 namespace WebApi.Services
 {
 
@@ -49,11 +49,14 @@ namespace WebApi.Services
                 ////////////// PUNTO 2
                 ///
                 list = WebApplication1.Services.DefineRoute.Define(list);
-                context.SaveChanges();
+
+                //context.SaveChanges();
 
                 ////////////// PUNTO 3
+                ShortRoutes shortRoutes = new ShortRoutes();
+                list=shortRoutes.datos(list);
                 ///
-
+                context.SaveChanges();
 
             }
             catch (Exception e ) {

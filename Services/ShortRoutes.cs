@@ -6,29 +6,42 @@ using WebApplication1.Data;
 using WebApplication1.Models;
 namespace WebApplication1.Services
 {
-   
+
     public class ShortRoutes
     {
 
-        public static Orders[] ordenarGen;
-        public static double calAntiguo = 0;
-        public static double calNuevo = 0;
-        public static int campo = 0;
-        public static int cont = 1;
-        public void datos(Connection _context)
+        private static Orders[] ordenarGen;
+        private static double calAntiguo = 0;
+        private static double calNuevo = 0;
+        private static int campo = 0;
+        private static int cont = 1;
+        private static List<Orders> listFinal;
+        public List<Orders> datos(List<Orders> orders)
         {
-           var dato = from c in _context.Orders
-                       where c.id < 2641
-                       select c;
-            ordenarGen = new Orders[dato.Count()];
-            ordenarGen = dato.ToArray();
-            ordenarGen[0].track_order = 1;
-            Console.WriteLine(ordenarGen[0].id + " : " + ordenarGen[0].track_order);
-            Ordenamiento(ordenarGen, 0);
-         }
+            List<List<Orders>> ordenes = new List<List<Orders>>();
+            int camiones = orders.Max(x => x.track_number.Value);
+            listFinal = new List<Orders>();
+            for (int i = 0; i < camiones; i++)
+            {
+                cont = 1;
+                campo = 0;
+                calAntiguo = 0;
+                calNuevo = 0;
+                List<Orders> lst = orders.Where(x => (x.track_number.Value == i + 1)).ToList();
+                ordenarGen = new Orders[lst.Count()];
+                ordenarGen = lst.ToArray();
+                ordenarGen[0].track_order = 1;
+                //Console.WriteLine(ordenarGen[0].id + " : " + ordenarGen[0].track_order);
+                Ordenamiento(ordenarGen, 0);
+                listFinal.AddRange(ordenarGen.ToList());
+            }
+            return listFinal;
 
-      
-        private static void Ordenamiento(Orders[] ordenar,int i)
+
+        }
+
+
+        private static void Ordenamiento(Orders[] ordenar, int i)
         {
             bool validacion = false;
             calAntiguo = 1000;
@@ -39,7 +52,7 @@ namespace WebApplication1.Services
                     if (i != j)
                     {
                         validacion = true;
-                        calNuevo = CalcularDistancia(ordenar[i].latitude, ordenar[j].latitude, ordenar[i].longitude, ordenar[j].longitude)/10000;
+                        calNuevo = CalcularDistancia(ordenar[i].latitude, ordenar[j].latitude, ordenar[i].longitude, ordenar[j].longitude) / 10000;
                         if (calNuevo < calAntiguo)
                         {
                             calAntiguo = calNuevo;
@@ -47,13 +60,12 @@ namespace WebApplication1.Services
                         }
                     }
                 }
-            }  
+            }
             if (validacion)
             {
-            cont = cont + 1;
-            ordenarGen[campo].track_order = cont;
-            Console.WriteLine(ordenarGen[campo].id+" : "+ ordenarGen[campo].track_order + " : "+ calAntiguo);
-          
+                cont = cont + 1;
+                ordenarGen[campo].track_order = cont;
+                //Console.WriteLine(ordenarGen[campo].id + " : " + ordenarGen[campo].track_order + " : " + calAntiguo);
                 Ordenamiento(ordenarGen, campo);
             }
         }
