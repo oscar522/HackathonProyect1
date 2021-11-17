@@ -23,7 +23,7 @@ namespace WebApplication1.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connection_ = "Server=tcp:pruebahackathon.database.windows.net,1433;Initial Catalog=PruebasAlgoritmo;Persist Security Info=False;User ID=adminPrueba;Password=hackathon2021.*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=3600;";
-            var connection_ = "Data Source=.\\sqlexpress;Initial Catalog=PruebasAlgoritmo;User ID=adminPrueba;Password=hackathon2021.*;Connection Timeout=30;";
+            var connection_ = "Data Source=.\\sqlexpress;Initial Catalog=PruebasAlgoritmo;User ID=adminPrueba;Password=hackathon2021.*;Connection Timeout=600;";
 
             optionsBuilder.UseSqlServer(connection_);
         }
