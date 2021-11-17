@@ -8,6 +8,7 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            /*
             Console.WriteLine("Inicio de proceso");
             string DateRoutes = "2021-09-07";
             try {
@@ -19,7 +20,25 @@ namespace ConsoleApp
 
             }
             Console.WriteLine("Fin de proceso");
+            */
+            Console.WriteLine("Inicio de proceso");
+            DateTime date = new DateTime(2021,09,18);
+            RoutesService RoutesService_ = new RoutesService();
+            try
+            {
+                while (date <= new DateTime(2021, 09, 23))
+                {
+                    RoutesService_.RoutesCreate(date);
+                    Console.WriteLine("Día " + date.ToShortDateString() + " procesado");
+                    date = date.AddDays(1);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ups ! algo Fallo : " + e.Message);
 
+            }
+            Console.WriteLine("Fin de proceso");
 
         }
     }
