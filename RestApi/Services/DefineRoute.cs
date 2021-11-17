@@ -13,6 +13,8 @@ namespace WebApplication1.Services
             double minX, maxX, minY, maxY;
             int orderQty;
 
+            if (orders.Count() == 0) return orders;
+
             minX = orders.Min(x => x.latitude);
             minY = orders.Min(x => x.longitude);
             maxX = orders.Max(x => x.latitude);

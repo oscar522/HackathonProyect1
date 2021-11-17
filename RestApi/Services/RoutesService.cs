@@ -51,6 +51,7 @@ namespace WebApi.Services
 
                 };
 
+                context.Database.SetCommandTimeout(0);
                 list = context.Orders.FromSqlRaw<Orders>(sql, parms.ToArray()).ToList();
 
                 ////////////// PUNTO 2
@@ -58,7 +59,7 @@ namespace WebApi.Services
                 list = WebApplication1.Services.DefineRoute.Define(list);
                 context.SaveChanges();
                 list = list.Where(x => x.delivery_date.HasValue).ToList();
-                
+                if (list.Count() == 0) return list;
                 ////////////// PUNTO 3
                 ShortRoutes shortRoutes = new ShortRoutes();
                 list=shortRoutes.datos(list);
