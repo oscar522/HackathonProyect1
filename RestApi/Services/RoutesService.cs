@@ -57,13 +57,18 @@ namespace WebApi.Services
                 ////////////// PUNTO 2
                 ///
                 list = WebApplication1.Services.DefineRoute.Define(list);
-                context.SaveChanges();
+                //context.SaveChanges();
+                
                 list = list.Where(x => x.delivery_date.HasValue).ToList();
+                var listNull = list.Where(x => x.delivery_date == null).ToList();
                 if (list.Count() == 0) return list;
                 ////////////// PUNTO 3
                 ShortRoutes shortRoutes = new ShortRoutes();
                 list=shortRoutes.datos(list);
                 ///
+
+                list.AddRange(listNull);
+
                 context.SaveChanges();
 
             }
