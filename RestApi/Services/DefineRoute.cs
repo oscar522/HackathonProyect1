@@ -62,7 +62,9 @@ namespace WebApplication1.Services
             GroupOrders groups = new GroupOrders();
 
             if (orderQty < 98) return groups;
-            /*if (orderQty % 100 == 0)
+           
+//Escenario 2. Inicia con camiones de 100 y va disminuyendo la capacidad
+            if (orderQty % 100 == 0)
             {
                 groups.group100 = (orderQty / 100);
                 return groups;
@@ -78,23 +80,47 @@ namespace WebApplication1.Services
                 return groups;
             }
 
+            GroupOrders o1 = new GroupOrders();
+            o1.group98 = orderQty / 98;
 
-            GroupOrders o1 = Verify(orderQty % 100);
-            o1.group100 = orderQty / 100;
-            if (o1.Total() == orderQty) return o1;
+            while ((o1.Total()+1 < orderQty) && (o1.group98 > 0))
+            {
+                o1.group100++;
+                o1.group98--;
+            }
 
-            GroupOrders o2 = Verify(orderQty % 99);
-            o2.group99 = orderQty / 99;
-            if (o2.Total() == orderQty) return o2;
+            while ((o1.Total() < orderQty) && (o1.group98 > 0))
+            {
+                o1.group99++;
+                o1.group98--;
+            }
 
-            GroupOrders o3 = Verify(orderQty % 98);
-            o3.group98 = orderQty / 98;
-            if (o3.Total() == orderQty) return o3;
+            while ((o1.Total() < orderQty) && (o1.group99 > 0))
+            {
+                o1.group100++;
+                o1.group99--;
+            }
 
-            if (o1.Total() < o2.Total()) o1 = o2;
-            if (o1.Total() < o3.Total()) o1 = o3;
-            */
 
+            //Fin escenario            
+            return o1;
+
+        }
+
+        /// <summary>
+        /// Verifica la cantidad de ordenes que puede enviar optimizando el uso de los camiones
+        /// </summary>
+        /// <param name="orderQty">Cantidad de ordenes iniciales</param>
+        /// <returns> Retorna una clase en donde informa cuántas rutas hay que crear de 98, de 99 y de 100</returns>
+        private static GroupOrders Verify1(int orderQty)
+        {
+
+            GroupOrders groups = new GroupOrders();
+
+            if (orderQty < 98) return groups;
+
+
+            /*Escenario 1. Inicia con camiones de 98 y va aumentando la capacidad*/
             GroupOrders o1 = Verify(orderQty % 98);
             o1.group98 = orderQty / 98;
 
@@ -109,10 +135,9 @@ namespace WebApplication1.Services
                 o1.group100++;
                 o1.group99--;
             }
-
+         
             return o1;
 
         }
-
     }
 }

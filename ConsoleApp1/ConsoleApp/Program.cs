@@ -22,11 +22,11 @@ namespace ConsoleApp
             Console.WriteLine("Fin de proceso");
             */
             Console.WriteLine("Inicio de proceso");
-            DateTime date = new DateTime(2021,09,18);
+            DateTime date = new DateTime(2021,09,08);
             RoutesService RoutesService_ = new RoutesService();
             try
             {
-                while (date <= new DateTime(2021, 09, 23))
+                while (date <= new DateTime(2021, 09, 08))
                 {
                     RoutesService_.RoutesCreate(date);
                     Console.WriteLine("Día " + date.ToShortDateString() + " procesado");
