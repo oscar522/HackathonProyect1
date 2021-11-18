@@ -10,6 +10,27 @@ namespace WebApplication1.Services
     {
         public static List<Orders> Define(List<Orders> orders)
         {
+            if (orders.Count() == 0) return orders;
+            
+            //Define la cantidad de ordenes que se puede enviar, la diferencia hay que descartar
+            GroupOrders groups = DefineRoute.Verify(orders.Count());
+            while (groups.Total() < orders.Count(x => x.delivery_date.HasValue))
+            {
+                orders.Where(x => (x.delivery_end_date > x.delivery_date)).OrderBy(x => x.longitude).FirstOrDefault().delivery_date = null;
+            }
+
+            var listNull = orders.Where(x => x.delivery_date == null).ToList();
+            MapRoutes mp = new MapRoutes(orders.Where(x => x.delivery_date.HasValue).ToList(), 1, 1);
+            mp.Reorganize(ref groups);
+            int v = 1;
+            orders = mp.CreateTracks(ref v);
+
+            orders.AddRange(listNull);
+
+            return orders;
+        }
+        public static List<Orders> Define1(List<Orders> orders)
+        {
             double minX, maxX, minY, maxY;
             int orderQty;
 
